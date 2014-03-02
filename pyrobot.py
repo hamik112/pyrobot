@@ -469,7 +469,7 @@ class Robot(object):
 			time.sleep(delay)
 			
 			
-	def rand_type(self, input_string,min_time,max_time):
+	def rand_type(self, input_string,min_time,max_time,hold_down_min,hold_down_max):
 		'''
 		Convenience function for typing out strings. 
 		Delay controls the time between each letter. 
@@ -480,9 +480,25 @@ class Robot(object):
 		'''
 
 		for letter in input_string:
-			
-			self._handle_input(letter)
+			hold_time=random.uniform(hold_down_min,hold_down_max)
+			self._handle_input(letter,hold_time)
 			time.sleep(random.uniform(min_time,max_time))
+	
+	
+	def _timed_handle_input(self, key,time_between_keys):
+		if ord(key) in range(65, 91):
+			# print 'Capital =', True
+			self._capitalize(key)
+		elif key in self.keys.special_keys:
+			# print 'Punctuation =', True
+			normalized_key = self._get_unshifted_key(key)
+			self._capitalize(normalized_key)
+		else:
+			self.key_press(key)
+			time.sleep(time_between_keys)
+			self.key_release(key)
+	
+	
 	
 	def _handle_input(self, key):
 		if ord(key) in range(65, 91):
