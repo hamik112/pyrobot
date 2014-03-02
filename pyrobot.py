@@ -33,7 +33,7 @@ import ctypes
 import multiprocessing 
 from ctypes import *
 from ctypes.wintypes import *
-
+import random
 
 
 class WIN32CON(object):
@@ -467,6 +467,22 @@ class Robot(object):
 		for letter in input_string:
 			self._handle_input(letter)
 			time.sleep(delay)
+			
+			
+	def rand_type(self, input_string,min_time,max_time):
+		'''
+		Convenience function for typing out strings. 
+		Delay controls the time between each letter. 
+
+		For the most part, large tests should be pushed
+		into the clipboard and pasted where needed. However, 
+		they typing serves the useful purpose of looking neat. 
+		'''
+
+		for letter in input_string:
+			
+			self._handle_input(letter)
+			time.sleep(random.uniform(min_time,max_time))
 	
 	def _handle_input(self, key):
 		if ord(key) in range(65, 91):
