@@ -481,7 +481,7 @@ class Robot(object):
 
 		for letter in input_string:
 			hold_time=random.uniform(hold_down_min,hold_down_max)
-			self._handle_input(letter,hold_time)
+			self._timed_handle_input(letter,hold_time)
 			time.sleep(random.uniform(min_time,max_time))
 	
 	
